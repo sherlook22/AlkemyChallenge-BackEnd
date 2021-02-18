@@ -4,6 +4,6 @@ import OperationsController from '../controllers/operations.controller';
 const operationRoutes = Router();
 
 operationRoutes.route('/register/operation')
-    .post(OperationsController.index);
+    .post(OperationsController.register);
     
 export { operationRoutes };
