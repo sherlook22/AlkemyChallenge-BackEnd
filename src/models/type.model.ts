@@ -5,7 +5,7 @@ import { Operation } from './operation.model'
 @Table
 export class Type extends TypeDefinition {
   
-    @HasMany(() => Operation)
-    operations!: Operation;
+    /* @HasMany(() => Operation)
+    operations!: Operation; */
 
 }
