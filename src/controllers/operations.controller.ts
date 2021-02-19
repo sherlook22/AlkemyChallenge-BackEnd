@@ -4,11 +4,14 @@ import { Type } from "../models/type.model";
 class OperationsController {
     public async index(req: Request, res: Response) {
         try {
-            const ops = await Operation.findAll({
+            const opsPromise = Operation.findAll({
                 include: [Type]
             });
+            const totalPromise = Operation.sum('amount');
 
-            res.status(200).json({ res: ops })
+            const [ops, total] = await Promise.all([opsPromise, totalPromise]);
+
+            res.status(200).json({ res: ops, total: total });
         } catch(e) {
             res.status(500).json({ res: "Internal error"});
         }
