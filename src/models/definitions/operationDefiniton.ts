@@ -10,11 +10,11 @@ export abstract class OperationDefinition extends Model<OperationI> {
   concept!: string;
 
   @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @Column(DataType.FLOAT)
   amount!: number;
   
   @AllowNull(false)
-  @Column(DataType.DATE)
+  @Column(DataType.DATEONLY)
   date!: Date;
 
 }
