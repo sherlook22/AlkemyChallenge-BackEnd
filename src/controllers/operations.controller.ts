@@ -39,13 +39,17 @@ class OperationsController {
     }
 
     public async update(req: Request, res: Response) {
-        const { id, concept, amount, date } = req.body;
+        const { id, concept, amount, date, type } = req.body.operation;
+        
+        let formatDate = date.split('/').reverse().join('-')
+        console.log(formatDate);
         
         try {
             await Operation.update({
                 concept,
                 amount,
-                date 
+                date: formatDate,
+                typeId: type
             },{
                 where: {id}
             });
