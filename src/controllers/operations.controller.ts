@@ -18,13 +18,18 @@ class OperationsController {
     }
     
     public async register(req: Request, res: Response) {
-        const { concept, amount, date, typeId } = req.body;
+        const { concept, amount, date, type } = req.body.operation;
+
+        //Format the date
+        let formatDate = date.split('/');
+        formatDate = formatDate[2] + '-' + formatDate[1] + '-' + formatDate[0];
+
         try{
             await Operation.create({
                 concept,
                 amount,
-                date,
-                typeId
+                date: formatDate,
+                typeId: type
             });
 
             res.status(201).json({ res: "Operation create successfully"});
