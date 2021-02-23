@@ -4,10 +4,28 @@ import { Type } from "../models/type.model";
 class OperationsController {
     public async index(req: Request, res: Response) {
         try {
-            const opsPromise = Operation.findAll({
+            const { page } = req.query as any;
+            const limit = 3; 
+            
+            const startIndex = (page - 1) * limit
+
+            const getPagingData = (data:any, page:any, limit:any) => {
+                const { count: totalItems, rows: operations } = data;
+                const currentPage = page ? +page : 0;
+                const totalPages = Math.ceil(totalItems / limit);
+              
+                return { totalItems, totalPages, currentPage, operations };
+            };
+
+            const opsPromise = Operation.findAndCountAll({
                 include: [Type],
-                order: [['date', 'DESC']]
+                order: [['date', 'DESC']],
+                offset: startIndex,
+                limit: limit
+            }).then((res:any) => {
+                return getPagingData(res, page, limit);
             });
+
             const totalPromise = Operation.sum('amount');
 
             const [ops, total] = await Promise.all([opsPromise, totalPromise]);
