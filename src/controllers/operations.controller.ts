@@ -5,7 +5,8 @@ class OperationsController {
     public async index(req: Request, res: Response) {
         try {
             const opsPromise = Operation.findAll({
-                include: [Type]
+                include: [Type],
+                order: [['date', 'DESC']]
             });
             const totalPromise = Operation.sum('amount');
 
@@ -62,8 +63,8 @@ class OperationsController {
     }
 
     public async delete(req: Request, res: Response) {
-        const id = req.body.id;
-
+        const id = req.params.id;
+        
         try {
             await Operation.destroy({
                 where: {id}

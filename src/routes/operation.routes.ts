@@ -13,7 +13,7 @@ operationRoutes.route(`${path}/register`)
 operationRoutes.route(`${path}/update`)
     .put(OperationsController.update);
 
-operationRoutes.route(`${path}/delete`)
+operationRoutes.route(`${path}/delete/:id`)
     .delete(OperationsController.delete);
     
 export { operationRoutes };
