@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { operationRoutes } from './operation.routes'
+import { operationRoutes } from './operation.routes';
+import { typeRoutes } from './type.routes';
 
 const router = Router();
 
 router.use('/', [
-    operationRoutes
+    operationRoutes,
+    typeRoutes
 ]);
 
 export default router;
