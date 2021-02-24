@@ -5,7 +5,7 @@ class OperationsController {
     public async index(req: Request, res: Response) {
         try {
             const { page } = req.query as any;
-            const limit = 3; 
+            const limit = 10; 
             
             const startIndex = (page - 1) * limit
 
