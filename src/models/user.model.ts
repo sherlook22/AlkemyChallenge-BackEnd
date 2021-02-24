@@ -10,4 +10,8 @@ export class User extends UserDefinition {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
     }
 
+    public validatePassword(password: string): boolean {
+        return bcrypt.compareSync(password, this.password);
+    }
+
 }
