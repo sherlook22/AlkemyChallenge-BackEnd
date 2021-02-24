@@ -2,9 +2,9 @@ import { Router } from 'express';
 import AuthController from '../controllers/auth.controller';
 
 const authRoutes = Router();
-const path = '/type'
+const path = '/auth'
 
-authRoutes.route(`${path}/index`)
-    .get(AuthController.index);
+authRoutes.route(`${path}/register`)
+    .post(AuthController.register);
     
 export { authRoutes };

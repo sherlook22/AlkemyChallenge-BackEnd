@@ -1,15 +1,12 @@
-import { Model, Column, Table, DataType, AllowNull, PrimaryKey, HasMany } from "sequelize-typescript";
+import { Model, Column, Table, DataType, AllowNull, Unique } from "sequelize-typescript";
 import { UserI } from '../../interfaces/user.interface';
 
 @Table({
     timestamps: false
 })
 export abstract class UserDefinition extends Model<UserI> {
-  @PrimaryKey
-  @Column(DataType.INTEGER)
-  id!: number;
-
   @AllowNull(false)
+  @Unique
   @Column(DataType.STRING(100))
   email!: string;
   
