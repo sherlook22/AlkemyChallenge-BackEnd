@@ -1,17 +1,15 @@
 import { Sequelize } from 'sequelize-typescript';
 import path from 'path';
-import dotenv from 'dotenv';
+import { env } from './configs';
 
-
-dotenv.config();
 const sequelize: Sequelize = new Sequelize(
     {   
-        database: process.env.DB_NAME,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        host: process.env.DB_HOST,
+        database: env.DB.NAME,
+        username: env.DB.USER,
+        password: env.DB.PASS,
+        host: env.DB.HOST,
         dialect: 'mysql',
-        port: Number(process.env.DB_PORT),
+        port: Number(env.DB.PORT),
         models: [path.join(path.dirname(__dirname), 'models', '**', '*.model.ts')],
         modelMatch: (filename, member) => {
             return filename.substring(0, filename.indexOf('.model')) === member.toLowerCase();
