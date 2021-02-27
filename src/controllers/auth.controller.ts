@@ -20,7 +20,6 @@ class AuthController {
 
     public async login(req: Request, res: Response) {
         const { email, password } = req.body;
-
         const user = await User.findOne({where: {email}});
 
         if(user === null) {

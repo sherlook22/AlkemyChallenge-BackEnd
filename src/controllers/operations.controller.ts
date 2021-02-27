@@ -4,7 +4,7 @@ import { Type } from "../models/type.model";
 class OperationsController {
     public async index(req: Request, res: Response) {
         try {
-            const { page } = req.query as any;
+            const { page, user } = req.query as any;
             const limit = 10; 
             
             const startIndex = (page - 1) * limit
@@ -21,12 +21,15 @@ class OperationsController {
                 include: [Type],
                 order: [['date', 'DESC']],
                 offset: startIndex,
-                limit: limit
+                limit: limit,
+                where: { userId: user }
             }).then((res:any) => {
                 return getPagingData(res, page, limit);
             });
 
-            const totalPromise = Operation.sum('amount');
+            const totalPromise = Operation.sum('amount',
+                { where: { userId: user } }
+            );
 
             const [ops, total] = await Promise.all([opsPromise, totalPromise]);
 
@@ -38,6 +41,7 @@ class OperationsController {
     
     public async register(req: Request, res: Response) {
         const { concept, amount, date, type } = req.body.operation;
+        const { user } = req.body;
 
         //Format the date
         let formatDate = date.split('/');
@@ -48,7 +52,8 @@ class OperationsController {
                 concept,
                 amount,
                 date: formatDate,
-                typeId: type
+                typeId: type,
+                userId: user
             });
 
             res.status(201).json({ res: "Operation create successfully"});
