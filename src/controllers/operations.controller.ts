@@ -69,14 +69,15 @@ class OperationsController {
         console.log(formatDate);
         
         try {
-            await Operation.update({
-                concept,
-                amount,
-                date: formatDate,
-                typeId: type
-            },{
-                where: {id}
-            });
+            await Operation.findOne({ where : { id }})
+                .then(async (res: Operation) => {
+                    await res.update({
+                        concept,
+                        amount,
+                        date: formatDate,
+                        typeId: type
+                    });
+                });
 
             res.status(201).json({res: "The operation was update"});
         } catch(e) {
