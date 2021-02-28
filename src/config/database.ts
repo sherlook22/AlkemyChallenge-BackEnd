@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import path from 'path';
 import { env } from './configs';
+import { Type } from '../models/type.model';
 
 const sequelize: Sequelize = new Sequelize(
     {   
@@ -18,6 +19,14 @@ const sequelize: Sequelize = new Sequelize(
 );
 
 export async function startConnection() {
+    /* ############################################# */
+    //Create the base types
+    async function crateBaseTypes() {
+        await Type.findOrCreate( {where: { name: 'Ingreso' }} );
+        await Type.findOrCreate( {where: { name: 'Egreso' }} );
+    }
+    /* ############################################# */
     await sequelize.sync( {alter:true} ); //{ force:true }
+    await crateBaseTypes();
     console.log("You are connected to database");
 }
